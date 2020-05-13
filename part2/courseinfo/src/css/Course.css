@@ -1,0 +1,11 @@
+.content {
+  background-color: lightgray;
+  list-style: none;
+  padding:10px;
+}
+.content li {
+  margin:10px;
+}
+.total {
+  background-color: thistle;
+}

@@ -1,0 +1,10 @@
+.basic-info{
+  font-weight: bolder;
+  font-size: larger;
+  list-style: none;
+  padding:0;
+}
+.flag {
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}

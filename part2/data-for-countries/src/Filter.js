@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-const Filter = ({ items, setFilteredItems }) => {
-  const [textInput, setTextInput] = useState("");
+const Filter = ({ textInput, setTextInput, items, setFilteredItems }) => {
   const textInputHandler = (event) => {
     setTextInput(event.target.value);
   };
@@ -8,8 +7,8 @@ const Filter = ({ items, setFilteredItems }) => {
     const filteredItems = items.filter(
       (item) => !item.name.toLowerCase().indexOf(textInput.toLowerCase())
     );
-     setFilteredItems(filteredItems);
-     textInput||setFilteredItems([]);
+    setFilteredItems(filteredItems);
+    textInput || setFilteredItems([]);
   }, [textInput]);
   return (
     <>

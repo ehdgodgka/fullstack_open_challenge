@@ -1,6 +1,6 @@
 import React from "react";
 import personService from "../components/services/person";
-const PersonList = ({ persons, setPersons, setNotification,notiTimer,setNotiTimer }) => {
+const PersonList = ({ persons, setPersons, setNotification, notiTimer, setNotiTimer }) => {
   const deleteHandler = ({ id, name }) => {
     if (window.confirm(`delete ${name}?`)) {
       personService

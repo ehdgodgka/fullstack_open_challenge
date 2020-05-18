@@ -18,13 +18,11 @@ const PersonForm = ({ persons, setPersons, setNotification, notiTimer, setNotiTi
     if (nameOf()) {
       if (window.confirm(`${newName} already existed. do you want to update?`)) {
         const id = nameOf().id;
-
         personService.update(id, newInfo).then((response) => {
           if (notiTimer) {
             clearTimeout(notiTimer);
           }
           setNotiTimer(setTimeout(() => setNotification({}), 3000));
-          // setTimeout(() => setNotification({}), 3000);
           setNotification({ style: "success", message: `Updated ${newInfo.name}` });
           setPersons(() =>
             persons.map((person) => (person.name === newName ? response.data : person))
@@ -37,7 +35,6 @@ const PersonForm = ({ persons, setPersons, setNotification, notiTimer, setNotiTi
           clearTimeout(notiTimer);
         }
         setNotiTimer(setTimeout(() => setNotification({}), 3000));
-        // setTimeout(() => setNotification({}), 3000);
         setNotification({ style: "success", message: `Added ${newInfo.name}` });
         setPersons(persons.concat(response.data));
       });

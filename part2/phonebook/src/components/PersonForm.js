@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import personService from "../components/services/person";
-const PersonForm = ({ persons, setPersons }) => {
+const PersonForm = ({ persons, setPersons, setNotification, notiTimer, setNotiTimer }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -12,18 +12,33 @@ const PersonForm = ({ persons, setPersons }) => {
     setNewNumber(event.target.value);
   };
 
-  const addInfo = (event) => {
+  const addInfo = async (event) => {
     event.preventDefault();
     const newInfo = { name: newName, number: newNumber };
     if (nameOf()) {
       if (window.confirm(`${newName} already existed. do you want to update?`)) {
-        const id = persons.indexOf(nameOf()) + 1;
+        const id = nameOf().id;
+
         personService.update(id, newInfo).then((response) => {
-          setPersons(persons.map((person) => (person.name === newName ? newInfo : person)));
+          if (notiTimer) {
+            clearTimeout(notiTimer);
+          }
+          setNotiTimer(setTimeout(() => setNotification({}), 3000));
+          // setTimeout(() => setNotification({}), 3000);
+          setNotification({ style: "success", message: `Updated ${newInfo.name}` });
+          setPersons(() =>
+            persons.map((person) => (person.name === newName ? response.data : person))
+          );
         });
       }
     } else {
       personService.create(newInfo).then((response) => {
+        if (notiTimer) {
+          clearTimeout(notiTimer);
+        }
+        setNotiTimer(setTimeout(() => setNotification({}), 3000));
+        // setTimeout(() => setNotification({}), 3000);
+        setNotification({ style: "success", message: `Added ${newInfo.name}` });
         setPersons(persons.concat(response.data));
       });
     }

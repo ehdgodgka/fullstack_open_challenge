@@ -1,7 +1,15 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
+const fs = require("fs");
+const marked = require("marked");
+require("dotenv").config();
+
 const app = express();
+app.use(cors());
 app.use(express.json());
+app.use(express.static("build"));
+
 let persons = [
   {
     name: "Arto Hellas",
@@ -19,15 +27,20 @@ let persons = [
     id: 3,
   },
 ];
-morgan.token("data", function (req, res) {
+morgan.token("data", (req, res) => {
   if (Object.keys(req.body).length) {
     return JSON.stringify(req.body);
   }
-  return " ";
+  return null;
 });
 
-
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :data"));
+
+app.get("/info", function (req, res) {
+  var readmePath = __dirname + "/README.md";
+  var file = fs.readFileSync(readmePath, "utf8");
+  res.send(marked(file.toString()));
+});
 
 app.get("/api/persons", (req, res) => {
   res.json(persons);
@@ -50,6 +63,7 @@ app.post("/api/persons", (req, res) => {
   }
   const newPerson = { ...person, id: Math.floor(Math.random() * 10000) + 1 };
   persons = persons.concat(newPerson);
+  res.status(200).json(newPerson);
 });
 
 app.get("/api/persons/:id", (req, res) => {
@@ -78,6 +92,7 @@ app.get("/info", (req, res) => {
   const time = new Date().toString();
   res.send(`<div>Phonebook has info for ${number} people</div> <div>${time}</div>`);
 });
-const port = 3001;
-app.listen(port);
-console.log(`Server running on port ${port}`);
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

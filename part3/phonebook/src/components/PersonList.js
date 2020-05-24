@@ -7,6 +7,11 @@ const PersonList = ({ persons, setPersons, setNotification, notiTimer, setNotiTi
         .remove(id)
         .then((response) => {
           setPersons(persons.filter((person) => person.id !== id));
+          if (notiTimer) {
+            clearTimeout(notiTimer);
+          }
+          setNotiTimer(setTimeout(() => setNotification({}), 3000));
+          setNotification({ style: "success", message: `${name} deleted` });
         })
         .catch((error) => {
           if (notiTimer) {

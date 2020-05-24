@@ -15,30 +15,65 @@ const PersonForm = ({ persons, setPersons, setNotification, notiTimer, setNotiTi
   const addInfo = async (event) => {
     event.preventDefault();
     const newInfo = { name: newName, number: newNumber };
-    if (nameOf()) {
-      if (window.confirm(`${newName} already existed. do you want to update?`)) {
-        const id = nameOf().id;
-        personService.update(id, newInfo).then((response) => {
-          if (notiTimer) {
-            clearTimeout(notiTimer);
-          }
-          setNotiTimer(setTimeout(() => setNotification({}), 3000));
-          setNotification({ style: "success", message: `Updated ${newInfo.name}` });
-          setPersons(() =>
-            persons.map((person) => (person.name === newName ? response.data : person))
-          );
-        });
-      }
-    } else {
-      personService.create(newInfo).then((response) => {
+    personService
+      .create(newInfo)
+      .then((response) => {
         if (notiTimer) {
           clearTimeout(notiTimer);
         }
         setNotiTimer(setTimeout(() => setNotification({}), 3000));
         setNotification({ style: "success", message: `Added ${newInfo.name}` });
         setPersons(persons.concat(response.data));
+      })
+      .catch((error) => {
+        if (nameOf()) {
+          if (window.confirm(`${newName} already existed. do you want to update?`)) {
+            const id = nameOf().id;
+            personService
+              .update(id, newInfo)
+              .then((response) => {
+                if (notiTimer) {
+                  clearTimeout(notiTimer);
+                }
+                setNotiTimer(setTimeout(() => setNotification({}), 3000));
+                setNotification({ style: "success", message: `Updated ${newInfo.name}` });
+                setPersons(() =>
+                  persons.map((person) => (person.name === newName ? response.data : person))
+                );
+              })
+              .catch((error) => {
+                setNotification({ style: "error", message: error.response.data.message });
+              });
+          }
+        } else {
+          setNotification({ style: "error", message: error.response.data.message });
+        }
       });
-    }
+
+    // if (nameOf()) {
+    //   if (window.confirm(`${newName} already existed. do you want to update?`)) {
+    //     const id = nameOf().id;
+    //     personService.update(id, newInfo).then((response) => {
+    //       if (notiTimer) {
+    //         clearTimeout(notiTimer);
+    //       }
+    //       setNotiTimer(setTimeout(() => setNotification({}), 3000));
+    //       setNotification({ style: "success", message: `Updated ${newInfo.name}` });
+    //       setPersons(() =>
+    //         persons.map((person) => (person.name === newName ? response.data : person))
+    //       );
+    //     });
+    //   }
+    // } else {
+    //   personService.create(newInfo).then((response) => {
+    //     if (notiTimer) {
+    //       clearTimeout(notiTimer);
+    //     }
+    //     setNotiTimer(setTimeout(() => setNotification({}), 3000));
+    //     setNotification({ style: "success", message: `Added ${newInfo.name}` });
+    //     setPersons(persons.concat(response.data));
+    //   });
+    // }
   };
   const nameOf = () => persons.find((person) => person.name === newName);
   return (

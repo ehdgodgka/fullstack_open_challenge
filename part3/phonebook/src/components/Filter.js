@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import Proptypes from 'prop-types';
 const Filter = ({ persons }) => {
-  const [filterInput, setFilterInput] = useState("");
+  const [filterInput, setFilterInput] = useState('');
   const filterInputHandler = (event) => {
     setFilterInput(event.target.value);
   };
@@ -10,7 +11,10 @@ const Filter = ({ persons }) => {
       <input value={filterInput} onChange={filterInputHandler} />
       {filterInput &&
         persons
-          .filter((person) => !person.name.toLowerCase().indexOf(filterInput.toLowerCase()))
+          .filter(
+            (person) =>
+              !person.name.toLowerCase().indexOf(filterInput.toLowerCase())
+          )
           .map((person) => (
             <li key={person.name}>
               {person.name} {person.number}
@@ -20,4 +24,7 @@ const Filter = ({ persons }) => {
   );
 };
 
+Filter.propTypes = {
+  persons: Proptypes.object.isRequired
+};
 export default Filter;

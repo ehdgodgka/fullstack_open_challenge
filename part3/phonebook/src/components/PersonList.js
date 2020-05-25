@@ -1,5 +1,7 @@
-import React from "react";
-import personService from "../components/services/person";
+import React from 'react';
+import personService from '../components/services/person';
+import Proptypes from 'prop-types';
+
 const PersonList = ({ persons, setPersons, setNotification, notiTimer, setNotiTimer }) => {
   const deleteHandler = ({ id, name }) => {
     if (window.confirm(`delete ${name}?`)) {
@@ -11,14 +13,17 @@ const PersonList = ({ persons, setPersons, setNotification, notiTimer, setNotiTi
             clearTimeout(notiTimer);
           }
           setNotiTimer(setTimeout(() => setNotification({}), 3000));
-          setNotification({ style: "success", message: `${name} deleted` });
+          setNotification({ style: 'success', message: `${name} deleted` });
         })
-        .catch((error) => {
+        .catch(() => {
           if (notiTimer) {
             clearTimeout(notiTimer);
           }
           setNotiTimer(setTimeout(() => setNotification({}), 3000));
-          setNotification({ style: "error", message: `${name}' was already removed from server` });
+          setNotification({
+            style: 'error',
+            message: `${name}' was already removed from server`
+          });
           setPersons(persons.filter((person) => person.id !== id));
         });
     }
@@ -35,4 +40,11 @@ const PersonList = ({ persons, setPersons, setNotification, notiTimer, setNotiTi
   );
 };
 
+PersonList.propTypes = {
+  persons: Proptypes.array.isRequired,
+  setPersons: Proptypes.func.isRequired,
+  setNotification: Proptypes.func.isRequired,
+  notiTimer: Proptypes.object.isRequired,
+  setNotiTimer: Proptypes.func.isRequired
+};
 export default PersonList;

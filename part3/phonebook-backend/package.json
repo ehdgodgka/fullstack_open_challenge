@@ -10,7 +10,8 @@
     "build:ui": "rm -rf build && cd ../phonebook && npm run build --prod && cp -r build ../phonebook-backend",
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint":"eslint ."
   },
   "author": "ehdgodgka",
   "license": "ISC",
@@ -24,6 +25,12 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^7.1.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^2.0.4"
   }
 }

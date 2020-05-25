@@ -1,7 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 if (process.argv.length < 5) {
-  console.log("Please proceed program in following form: node mongo.js <password> <name> <number>");
+  console.log(
+    'Please proceed program in following form: node mongo.js <password> <name> <number>'
+  );
   process.exit(1);
 }
 
@@ -16,14 +18,14 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  number: { type: String, required: true },
+  number: { type: String, required: true }
 });
 
-const Person = mongoose.model("Person", personSchema);
+const Person = mongoose.model('Person', personSchema);
 
 const person = new Person({
   name: name,
-  number: number,
+  number: number
 });
 
 person.save().then((result) => {

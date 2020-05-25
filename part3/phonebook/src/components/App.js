@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Notification from "./Notification";
-import Filter from "./Filter";
-import PersonForm from "./PersonForm";
-import PersonList from "./PersonList";
-import personService from "./services/person";
+import React, { useState, useEffect } from 'react';
+import Notification from './Notification';
+import Filter from './Filter';
+import PersonForm from './PersonForm';
+import PersonList from './PersonList';
+import personService from './services/person';
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [notification, setNotification] = useState({});

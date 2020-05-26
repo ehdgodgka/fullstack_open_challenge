@@ -4,7 +4,8 @@
   "description": "blog-list backend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "dev": "ENVIRONMENT=dev nodemon index.js"
   },
   "author": "",
@@ -14,5 +15,10 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.9.16"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1",
+    "lodash.groupby": "^4.6.0",
+    "lodash.mapvalues": "^4.6.0"
   }
 }

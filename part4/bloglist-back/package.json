@@ -4,9 +4,9 @@
   "description": "blog-list backend",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_ENV=test jest --verbose --runInBand --detectOpenHandles",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
-    "dev": "ENVIRONMENT=dev nodemon index.js"
+    "dev": "NODE_ENV=dev nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,11 +14,13 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "mongoose": "^5.9.16"
   },
   "devDependencies": {
     "jest": "^26.0.1",
     "lodash.groupby": "^4.6.0",
-    "lodash.mapvalues": "^4.6.0"
+    "lodash.mapvalues": "^4.6.0",
+    "supertest": "^4.0.2"
   }
 }

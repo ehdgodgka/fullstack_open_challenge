@@ -5,8 +5,15 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "buy avocado ??",
-  "author": "Healthy",
-  "url": "http://blog/Healtier life",
-  "likes": 1221
+  "title": "Meet hyeyoon !! energetic ",
+  "author": "soo",
+  "url": "so lovely",
+  "likes": 12
 }
+### delete one item 
+DELETE http://localhost:3003/api/blogs/5ed122268f8f6b74433ded73
+
+### update like +1 
+PUT http://localhost:3003/api/blogs/5ed206837801cd042a87a894
+Content-Type: application/json
+

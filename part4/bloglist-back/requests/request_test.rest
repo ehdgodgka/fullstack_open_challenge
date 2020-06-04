@@ -1,5 +1,6 @@
 GET http://localhost:3003/api/blogs
-
+###
+GET http://localhost:3003/api/users
 ### 
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
@@ -8,12 +9,70 @@ Content-Type: application/json
   "title": "Meet hyeyoon !! energetic ",
   "author": "soo",
   "url": "so lovely",
-  "likes": 12
+  "likes": 12,
+  "userId":"5ed66d2a9dc13d4ea07486b2"
 }
-### delete one item 
-DELETE http://localhost:3003/api/blogs/5ed122268f8f6b74433ded73
+### post only authenticated user
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdvcmlsbGEiLCJpZCI6IjVlZDc5ZjU2OTliOWU4ODAwY2JmZGMzZiIsImlhdCI6MTU5MTIwMTkxMH0.fmwOexOi1EaCVyxoWdbXOk7BhcrB6VkpUOwUtdrzIXs
+
+{
+  "title": "I am new here my name is gorilla ",
+  "author": "gorilla",
+  "url": "http://goillablog.com",
+  "likes": 0
+}
+### create user 
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+      "username": "gorilla",
+      "name": "soohoo",
+      "password": "kkkk"
+}
+
+
+### create already exist
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+      "username": "root",
+      "name": "Superuser",
+      "password": "salainen"
+}
+
+### login correct
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+      "username": "gorilla",
+      "password": "kkkk"
+}
+### login wrong
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+      "username": "root",
+      "password": "alainen"
+}
+
+
+### delete one item (own)
+DELETE http://localhost:3003/api/blogs/5ed789a6519573793b053058
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVlZDY2ZDJhOWRjMTNkNGVhMDc0ODZiMiIsImlhdCI6MTU5MTE4MDM2Nn0.ziwkQnEZo4DoIDhqik7CUoC8whKuQMXQwHFr4LKhQ7s
+
+### delete one item (gorilla try to delete root post)
+DELETE http://localhost:3003/api/blogs/5ed789a6519573793b053058
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdvcmlsbGEiLCJpZCI6IjVlZDc4ZTI0YWZhNzU0N2IwYTVhOTQ0NSIsImlhdCI6MTU5MTE4NDk1NX0.X6ddM2qp4vbD6BDCaVTzr7CStxmsRG_Mqu4s87_zjd0
 
 ### update like +1 
 PUT http://localhost:3003/api/blogs/5ed206837801cd042a87a894
 Content-Type: application/json
+
+
 

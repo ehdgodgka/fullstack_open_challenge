@@ -9,17 +9,42 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
+const tokenExtractor = (req, res, next) => {
+  const authorization = req.get('authorization');
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    req.token = authorization.substring(7);
+  }
+  next();
+};
+
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' });
+  response.status(404).send({ error: { messsage: 'unknown endpoint' } });
 };
 
 const errorHandler = (error, request, response, next) => {
-  logger.error(error.message);
+  logger.error(error.name, error.message);
 
-  if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' });
-  } else if (error.name === 'ValidationError') {
-    return response.status(400).json({ error: error.message });
+  switch (error.name) {
+    case 'CastError':
+      return response
+        .status(400)
+        .send({ error: { name: 'CastError', message: 'malformatted id' } });
+      break;
+    case 'ValidationError':
+      return response
+        .status(400)
+        .json({ error: { name: 'ValidationError', message: error.message } });
+      break;
+    case 'JsonWebTokenError':
+    case 'unAuthorized':
+      return response.status(401).json({ error: { name: 'unAuthorized', message: error.message } });
+      break;
+
+    default:
+      return;
+  }
+  if (error.name.includes('MongoError')) {
+    return response.status(400).json({ error: { name: 'MongoError', message: error.message } });
   }
 
   next(error);
@@ -27,6 +52,7 @@ const errorHandler = (error, request, response, next) => {
 
 module.exports = {
   requestLogger,
+  tokenExtractor,
   unknownEndpoint,
   errorHandler
 };

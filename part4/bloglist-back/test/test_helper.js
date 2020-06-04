@@ -1,5 +1,12 @@
 const Blog = require('../models/blog');
+const User = require('../models/user');
 
+const users = [
+  { username: 'root', name: 'mingo', password: 'sekret' },
+  { username: 'gorilla', name: 'soohoo', password: 'kkkk' },
+  { username: 'horangii', name: 'jandi', password: 'funny' },
+  { username: 'moonighy', name: 'Superuser', password: 'salainen' }
+];
 const blogs = [
   {
     title: 'React patterns',
@@ -30,6 +37,12 @@ const blogs = [
 const blogsInDb = async () => {
   const blogs = await Blog.find({});
   return blogs.map((blog) => blog.toJSON());
-  // return blogs;
 };
-module.exports = { blogs, blogsInDb };
+
+const usersInDb = async () => {
+  const users = await User.find({});
+  return users.map((user) => user.toJSON());
+};
+
+
+module.exports = { users, blogs, blogsInDb, usersInDb };

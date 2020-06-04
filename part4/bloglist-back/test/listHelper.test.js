@@ -25,7 +25,7 @@ describe('total likes', () => {
   });
 
   test('blogs list like total', () => {
-    expect(listHelper.totalLikes(blogs)).toBe(36);
+    expect(listHelper.totalLikes(blogs)).toBe(34);
   });
 });
 
@@ -40,7 +40,7 @@ describe('test favoriteBlog (find most liked blog)', () => {
 
 describe('most blog', () => {
   test('return author and number of the most blog', () => {
-    expect(listHelper.mostBlogs(blogs)).toEqual({ author: 'Robert C. Martin', blogs: 3 });
+    expect(listHelper.mostBlogs(blogs)).toEqual({ author: 'Edsger W. Dijkstra', blogs: 2 });
   });
 });
 
